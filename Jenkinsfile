@@ -4,6 +4,8 @@
 
 def tools = new org.devops.tools()
 
+hello()
+
 String workspace = "/opt/jenkins/workspace"
 
 pipeline {
@@ -56,23 +58,29 @@ pipeline {
 			}
 		}
 		
-		stage("Build") {
-			steps {
-				timeout(time:20, unit:"MINUTES") {
-					script {
-						println("应用打包")
+		stage("Parallel Stage") {
+			failFast true
+			parallel {
+				
+				stage("Build") {
+					steps {
+						timeout(time:20, unit:"MINUTES") {
+							script {
+								println("应用打包")
+							}
+						}
 					}
 				}
-			}
-		}
-		
-		stage("CodeScan") {
-			steps {
-				timeout(time:30, unit:"MINUTES") {
-					script {
-						println("代码扫描")
-						
-						tools.PrintMsg("This is jenkins library share")
+				
+				stage("CodeScan") {
+					steps {
+						timeout(time:30, unit:"MINUTES") {
+							script {
+								println("代码扫描")
+								
+								tools.PrintMsg("This is jenkins library share")
+							}
+						}
 					}
 				}
 			}
