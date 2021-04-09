@@ -4,8 +4,6 @@
 
 def tools = new org.devops.tools()
 
-hello()
-
 String workspace = "/opt/jenkins/workspace"
 
 pipeline {
@@ -46,6 +44,7 @@ pipeline {
 					    echo "Hello, ${PERSON}, nice to meet you."
 					    
 						println("获取代码")
+						tools.PrintMsg("获取代码","red")
 						
 						println("${test}")
 						
@@ -67,6 +66,7 @@ pipeline {
 						timeout(time:20, unit:"MINUTES") {
 							script {
 								println("应用打包")
+								tools.PrintMsg("应用打包","blue")
 							}
 						}
 					}
@@ -76,9 +76,7 @@ pipeline {
 					steps {
 						timeout(time:30, unit:"MINUTES") {
 							script {
-								println("代码扫描")
-								
-								tools.PrintMsg("This is jenkins library share")
+								tools.PrintMsg("代码扫描","green")
 							}
 						}
 					}
